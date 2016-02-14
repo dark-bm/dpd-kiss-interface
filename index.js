@@ -13,12 +13,13 @@ var Resource       = require('deployd/lib/resource'),
 function KissInterface( ) {
     Resource.apply( this, arguments );
 
-    //if(!this.config.privateKey){
-    //    this.key = NodeRSA({b: 2048});
-    //    this.config.privateKey = this.key.exportKey();
-    //}else{
-    //    this.key = NodeRSA(this.config.privateKey);
-    //}
+    if(!this.config.PrivateKey){
+        this.key = NodeRSA({b: 512});
+        this.options.PrivateKey = this.key.exportKey('pkcs8-private-pem');
+        this.options.PublicKey = this.key.exportKey('pkcs8-public-pem');
+    }else{
+        this.key = NodeRSA(this.config.PrivateKey);
+    }
 }
 util.inherits( KissInterface, Resource );
 
@@ -50,6 +51,10 @@ KissInterface.basicDashboard = {
             name        : 'PrivateKey',
             type        : 'textarea',
             description : 'Private key PEM string.'
+        }, {
+            name        : 'PublicKey',
+            type        : 'textarea',
+            description : 'Public key PEM string.'
         }
     ]
 };
