@@ -31,23 +31,19 @@ KissInterface.prototype.clientGeneration = true;
 KissInterface.basicDashboard = {
     settings: [
         {
-            name        : 'private_key',
-            type        : 'text',
-            description : 'Path to private key file.'
-        }, {
-            name        : 'collection.computers',
+            name        : 'ComputersCollection',
             type        : 'text',
             description : 'Computer information collection.'
         }, {
-            name        : 'collection.snmp',
+            name        : 'SnmpCollection',
             type        : 'text',
             description : 'SNMP devices collection.'
         }, {
-            name        : 'internalOnly',
+            name        : 'InternalOnly',
             type        : 'checkbox',
             description : 'Only internal queries.'
         }, {
-            name        : 'debug',
+            name        : 'Debug',
             type        : 'checkbox',
             description : 'Write all request info to console.'
         }, {
@@ -68,7 +64,7 @@ KissInterface.prototype.handle = function ( ctx, next ) {
         return next();
     }
 
-    if ( !ctx.req.internal && this.config.internalOnly ) {
+    if ( !ctx.req.internal && this.config.InternalOnly ) {
         return ctx.done({ statusCode: 403, message: 'Forbidden' });
     }
 
@@ -91,7 +87,7 @@ KissInterface.prototype.handle = function ( ctx, next ) {
 
     var that = this;
 
-    if (that.config.debug) {
+    if (that.config.Debug) {
         console.log('_______________________________________________');
         console.log('Received update:');
         console.log('From:    ', data.from);
