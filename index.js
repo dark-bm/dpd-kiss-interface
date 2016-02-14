@@ -13,12 +13,12 @@ var Resource       = require('deployd/lib/resource'),
 function KissInterface( ) {
     Resource.apply( this, arguments );
 
-    if(!this.config.PrivateKey){
-        this.key = NodeRSA({b: 512});
-        this.options.PrivateKey = this.key.exportKey('pkcs8-private-pem');
-        this.options.PublicKey = this.key.exportKey('pkcs8-public-pem');
-    }else{
+    if(this.config.PrivateKey){
         this.key = NodeRSA(this.config.PrivateKey);
+    }else{
+        if (this.config.Debug) {
+            console.log('NO PRIVATE KEY!');
+        }
     }
 }
 util.inherits( KissInterface, Resource );
@@ -51,10 +51,6 @@ KissInterface.basicDashboard = {
             name        : 'PrivateKey',
             type        : 'textarea',
             description : 'Private key PEM string.'
-        }, {
-            name        : 'PublicKey',
-            type        : 'textarea',
-            description : 'Public key PEM string.'
         }
     ]
 };
@@ -71,6 +67,10 @@ KissInterface.prototype.handle = function ( ctx, next ) {
 
     if ( !ctx.req.internal && this.config.InternalOnly ) {
         return ctx.done({ statusCode: 403, message: 'Forbidden' });
+    }
+
+    if(!this.config.PrivateKey || typeof this.key == 'undefined'){
+        return ctx.done({ statusCode: 400, message: 'Private key not set' });
     }
 
     var data = ctx.body || {};
