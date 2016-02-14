@@ -9,14 +9,13 @@ var Resource       = require('deployd/lib/resource'),
 /**
  * Module setup.
  */
-
 function KissInterface( ) {
     Resource.apply( this, arguments );
 
     if(this.config.PrivateKey){
         this.key = NodeRSA(this.config.PrivateKey);
         if (this.config.Debug) {
-            console.log('Pprivate key set. RSA loaded.');
+            console.log('Private key set. RSA loaded.');
         }
     }else{
         if (this.config.Debug) {
@@ -35,13 +34,9 @@ KissInterface.prototype.clientGeneration = true;
 KissInterface.basicDashboard = {
     settings: [
         {
-            name        : 'ComputersCollection',
+            name        : 'Collection',
             type        : 'text',
-            description : 'Computer information collection.'
-        }, {
-            name        : 'SnmpCollection',
-            type        : 'text',
-            description : 'SNMP devices collection.'
+            description : 'Clients information collection.'
         }, {
             name        : 'InternalOnly',
             type        : 'checkbox',
@@ -61,7 +56,6 @@ KissInterface.basicDashboard = {
 /**
  * Module methodes
  */
-
 KissInterface.prototype.handle = function ( ctx, next ) {
 
     if ( ctx.req && ctx.req.method !== 'POST' ) {
@@ -109,5 +103,4 @@ KissInterface.prototype.handle = function ( ctx, next ) {
 /**
  * Module export
  */
-
 module.exports = KissInterface;
