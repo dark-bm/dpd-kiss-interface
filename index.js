@@ -13,12 +13,12 @@ var Resource       = require('deployd/lib/resource'),
 function KissInterface( ) {
     Resource.apply( this, arguments );
 
-    if(!this.config.privateKey){
-        this.key = NodeRSA({b: 2048});
-        this.config.privateKey = this.key.exportKey();
-    }else{
-        this.key = NodeRSA(this.config.privateKey);
-    }
+    //if(!this.config.privateKey){
+    //    this.key = NodeRSA({b: 2048});
+    //    this.config.privateKey = this.key.exportKey();
+    //}else{
+    //    this.key = NodeRSA(this.config.privateKey);
+    //}
 }
 util.inherits( KissInterface, Resource );
 
