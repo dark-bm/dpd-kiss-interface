@@ -106,4 +106,4 @@ KissInterface.prototype.handle = function ( ctx, next ) {
  * Module export
  */
 
-module.exports = Email;
+module.exports = KissInterface;
