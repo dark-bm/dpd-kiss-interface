@@ -15,6 +15,9 @@ function KissInterface( ) {
 
     if(this.config.PrivateKey){
         this.key = NodeRSA(this.config.PrivateKey);
+        if (this.config.Debug) {
+            console.log('Pprivate key set. RSA loaded.');
+        }
     }else{
         if (this.config.Debug) {
             console.log('NO PRIVATE KEY!');
